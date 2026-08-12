@@ -101,7 +101,7 @@ endif()
 include(c4Macros)
 include(WriteConfigFile_c4)
 include(WriteEnvCache)
-include(Dart)
+include(CTest)
 include(CheckCompiler)
 include(ROOTMacros) # This is from FR, see https://github.com/FairRootGroup/FairRoot/issues/1221
 

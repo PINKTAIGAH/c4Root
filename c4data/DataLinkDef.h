@@ -45,6 +45,9 @@
 #pragma link C++ class FatimaTwinpeaksData+;
 #pragma link C++ class FatimaTwinpeaksCalData+;
 
+#pragma link C++ class v1751DpppsdData+;
+#pragma link C++ class FatimaV1751Data+;
+
 #pragma link C++ class FatimaVmeQDCItem+;
 #pragma link C++ class FatimaVmeTDCItem+;
 #pragma link C++ class FatimaVmeQDCCalItem+;
