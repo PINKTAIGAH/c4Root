@@ -179,7 +179,7 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
             event.Set_wr_subsystem_id(0);
             event.Set_wr_t(0);
 
-            c4LOG(info, Form("bid = %i, chid = %i, time_tag = %i, time = %i, ql = %i, qs = %i",board_id,channel_id,channel_time_tag,channel_time,channel_charge_long,channel_charge_short));
+            // c4LOG(info, Form("bid = %i, chid = %i, time_tag = %i, time = %i, ql = %i, qs = %i",board_id,channel_id,channel_time_tag,channel_time,channel_charge_long,channel_charge_short));
 
             bool set_write = (channel_charge_long>0) ? true : false;
         
