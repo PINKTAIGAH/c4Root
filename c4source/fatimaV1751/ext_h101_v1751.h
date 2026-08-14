@@ -29,9 +29,9 @@ typedef          int  int32_t;
 typedef struct EXT_STR_h101_v1751_t
 {
   /* UNPACK */
-  uint32_t vme_qdc_n /* [0,32] */;
-  uint32_t vme_qdc_nI[32 EXT_STRUCT_CTRL(vme_qdc_n)] /* [1,32] */;
-  uint32_t vme_qdc_data[32 EXT_STRUCT_CTRL(vme_qdc_n)] /* [0,16777215] */;
+  // uint32_t vme_qdc_n /* [0,32] */;
+  // uint32_t vme_qdc_nI[32 EXT_STRUCT_CTRL(vme_qdc_n)] /* [1,32] */;
+  // uint32_t vme_qdc_data[32 EXT_STRUCT_CTRL(vme_qdc_n)] /* [0,16777215] */;
   uint32_t vme_v1751_board_id /* [0,255] */;
   uint32_t vme_v1751_channels1 /* [0,255] */;
   uint32_t vme_v1751_channels2 /* [0,255] */;
@@ -119,9 +119,9 @@ typedef struct EXT_STR_h101_v1751_t
 typedef struct EXT_STR_h101_v1751_onion_t
 {
   /* UNPACK */
-  uint32_t vme_qdc_n;
-  uint32_t vme_qdc_nI[32 /* vme_qdc_n */];
-  uint32_t vme_qdc_data[32 /* vme_qdc_n */];
+  // uint32_t vme_qdc_n;
+  // uint32_t vme_qdc_nI[32 /* vme_qdc_n */];
+  // uint32_t vme_qdc_data[32 /* vme_qdc_n */];
   uint32_t vme_v1751_board_id;
   uint32_t vme_v1751_channels1;
   uint32_t vme_v1751_channels2;
@@ -205,15 +205,6 @@ typedef struct EXT_STR_h101_v1751_onion_t
 #define EXT_STR_h101_v1751_ITEMS_INFO(ok,si,offset,struct_t,printerr) do { \
   ok = 1; \
   /* UNPACK */ \
-  EXT_STR_ITEM_INFO2_LIM(ok,si,offset,struct_t,printerr,\
-                     vme_qdc_n,                       UINT32,\
-                    "vme_qdc_n",32,0/*flags*/); \
-  EXT_STR_ITEM_INFO2_ZZP(ok,si,offset,struct_t,printerr,\
-                     vme_qdc_nI,                      UINT32,\
-                    "vme_qdc_nI",                      "vme_qdc_n",0/*flags*/); \
-  EXT_STR_ITEM_INFO2_ZZP(ok,si,offset,struct_t,printerr,\
-                     vme_qdc_data,                    UINT32,\
-                    "vme_qdc_data",                    "vme_qdc_n",0/*flags*/); \
   EXT_STR_ITEM_INFO2_LIM(ok,si,offset,struct_t,printerr,\
                      vme_v1751_board_id,              UINT32,\
                     "vme_v1751_board_id",255,0/*flags*/); \
@@ -445,3 +436,13 @@ typedef struct EXT_STR_h101_v1751_onion_t
 #endif/*__GUARD_H101_VME_EXT_H101_VME_H__*/
 
 /*******************************************************/
+
+  // EXT_STR_ITEM_INFO2_LIM(ok,si,offset,struct_t,printerr,
+  //                    vme_qdc_n,                       UINT32,
+  //                   "vme_qdc_n",32,0/*flags*/); 
+  // EXT_STR_ITEM_INFO2_ZZP(ok,si,offset,struct_t,printerr,
+  //                    vme_qdc_nI,                      UINT32,
+  //                   "vme_qdc_nI",                      "vme_qdc_n",0/*flags*/); 
+  // EXT_STR_ITEM_INFO2_ZZP(ok,si,offset,struct_t,printerr,
+  //                    vme_qdc_data,                    UINT32,
+  //                   "vme_qdc_data",                    "vme_qdc_n",0/*flags*/); 

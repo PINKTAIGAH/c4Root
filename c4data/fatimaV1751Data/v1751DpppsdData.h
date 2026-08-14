@@ -35,6 +35,13 @@ class v1751DpppsdData : public TObject
         inline const uint16_t Get_channel_charge_short() const { return fchannel_charge_short; }
         inline const uint16_t Get_channel_charge_long() const { return fchannel_charge_long; }
 
+        inline const uint16_t Get_trace(const int idx) {
+            return trace[idx];
+        }
+        inline const uint16_t Get_trace_length() {
+            return flength;
+        }
+
         inline const uint16_t Get_wr_subsystem_id() const { return fwr_subsystem_id; }
         inline const uint64_t Get_wr_t() const { return fwr_t; }
 
@@ -49,6 +56,11 @@ class v1751DpppsdData : public TObject
         void Set_channel_charge_short(uint16_t v) { fchannel_charge_short = v; }
         void Set_channel_charge_long(uint16_t v) { fchannel_charge_long = v; }
 
+        void Set_trace_val(uint16_t vtrace, int idx) {
+                trace[idx] = vtrace;
+        }
+        void Set_length(int length){flength = length;}
+
         void Set_wr_subsystem_id(uint32_t v) { fwr_subsystem_id = v; }
         void Set_wr_t(uint64_t v) { fwr_t = v; }
 
@@ -61,6 +73,8 @@ class v1751DpppsdData : public TObject
         uint32_t fchannel_fine_time;
         uint16_t fchannel_charge_short;
         uint16_t fchannel_charge_long;
+        uint16_t trace[VMEV1751_TRACE_SIZE];
+        uint16_t flength;
 
         //whiterabbit
         uint32_t fwr_subsystem_id;

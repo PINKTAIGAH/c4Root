@@ -86,10 +86,10 @@ Bool_t v1751DpppsdReader::Read()
 
     if(!fData) return kTRUE;
 
-    uint32_t num_channels_fired = fData->vme_qdc_n;
-    for (int ihit = 0; ihit < num_channels_fired; ihit++){
-        int channel = (int)fData->vme_qdc_nI[ihit];
-        int16_t charge = (int16_t)fData->vme_qdc_data[ihit];
+    // uint32_t num_channels_fired = fData->vme_qdc_n;
+    // for (int ihit = 0; ihit < num_channels_fired; ihit++){
+    //     int channel = (int)fData->vme_qdc_nI[ihit];
+    //     int16_t charge = (int16_t)fData->vme_qdc_data[ihit];
 
         // new ((*fArrayqdc)[fArrayqdc->GetEntriesFast()]) QDCData(
         // 0,
@@ -98,7 +98,7 @@ Bool_t v1751DpppsdReader::Read()
         // 0, //wr here if added in the future
         // 0
         // );
-    }
+    // }
 
     uint32_t board_id = fData->vme_v1751_board_id;
     
@@ -158,10 +158,10 @@ Bool_t v1751DpppsdReader::Read()
           nfired_ch,board_id,ich,*vme_v1751_trigger_time[ich],*vme_v1751_fine_time[ich],*vme_v1751_charge_short[ich],*vme_v1751_charge_long[ich],
           0,0 // last two are WR, change if want to add it in
         );
-        // event->Set_length(*vme_v1751_sample_trace[ich]);
-        // for (int it = 0; it<*vme_v1751_sample_trace[ich];it++){
-        //     event->Set_trace_val((uint16_t)((*vme_v1751_sample_traceV[ich])[it]), it);
-        // }
+        event->Set_length(*vme_v1751_sample_trace[ich]);
+        for (int it = 0; it<*vme_v1751_sample_trace[ich];it++){
+            event->Set_trace_val((uint16_t)((*vme_v1751_sample_traceV[ich])[it]), it);
+        }
         new ((*fArray)[fArray->GetEntriesFast()]) v1751DpppsdData(*event);
     }
 

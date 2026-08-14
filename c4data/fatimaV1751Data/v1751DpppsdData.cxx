@@ -27,7 +27,12 @@ v1751DpppsdData::v1751DpppsdData()
       fchannel_charge_long(0),
       fwr_subsystem_id(0),
       fwr_t(0)
-{}
+{
+    flength = 0;
+    for (int i = 0; i<VMEV1751_TRACE_SIZE; i++){
+        trace[i] = 0;
+    }
+}
 
 v1751DpppsdData::v1751DpppsdData(
         uint32_t num_channels_fired,
@@ -49,6 +54,11 @@ v1751DpppsdData::v1751DpppsdData(
     fchannel_charge_long(channel_charge_long),
     fwr_subsystem_id(wr_subsystem_id),
     fwr_t(wr_t)
-{}
+{
+    flength = 0;
+    for (int i = 0; i<VMEV1751_TRACE_SIZE; i++){
+        trace[i] = 0;
+    }
+}
 
 ClassImp(v1751DpppsdData)
