@@ -36,7 +36,7 @@ FatimaV1751Data::FatimaV1751Data(
   uint8_t channel_id,
   uint32_t channel_time_tag,
   uint32_t channel_fine_time,
-  uint32_t channel_time,
+  double channel_time,
   uint16_t channel_charge_short,
   uint16_t channel_charge_long,
   uint16_t channel_energy,

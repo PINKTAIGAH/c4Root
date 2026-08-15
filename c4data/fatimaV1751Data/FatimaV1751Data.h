@@ -18,7 +18,7 @@ class FatimaV1751Data : public TObject
                         uint8_t channel_id,
                         uint32_t channel_time_tag,
                         uint32_t channel_fine_time,
-                        uint32_t channel_time,
+                        double channel_time,
                         uint16_t channel_charge_short,
                         uint16_t channel_charge_long,
                         uint16_t channel_energy,
@@ -35,7 +35,7 @@ class FatimaV1751Data : public TObject
         inline const uint8_t Get_channel_id() const { return fchannel_id; }
         inline const uint32_t Get_channel_time_tag() const { return fchannel_time_tag; }
         inline const uint32_t Get_channel_fine_time() const { return fchannel_fine_time; }
-        inline const uint32_t Get_channel_time() const { return fchannel_time; }
+        inline const double Get_channel_time() const { return fchannel_time; }
         inline const uint16_t Get_channel_charge_short() const { return fchannel_charge_short; }
         inline const uint16_t Get_channel_charge_long() const { return fchannel_charge_long; }
         inline const uint16_t Get_channel_energy() const { return fchannel_energy; }
@@ -49,7 +49,7 @@ class FatimaV1751Data : public TObject
         void Set_channel_id(uint8_t v) { fchannel_id = v; }
         void Set_channel_time_tag(uint32_t v) { fchannel_time_tag = v; }
         void Set_channel_fine_time(uint32_t v) { fchannel_fine_time = v; }
-        void Set_channel_time(uint32_t v) { fchannel_time = v; }
+        void Set_channel_time(double v) { fchannel_time = v; }
         void Set_channel_charge_short(uint16_t v) { fchannel_charge_short = v; }
         void Set_channel_charge_long(uint16_t v) { fchannel_charge_long = v; }
         void Set_channel_energy(double v) { fchannel_energy = v; }
@@ -64,7 +64,7 @@ class FatimaV1751Data : public TObject
         uint8_t fchannel_id;
         uint32_t fchannel_time_tag;
         uint32_t fchannel_fine_time;
-        uint32_t fchannel_time;
+        double fchannel_time;
         uint16_t fchannel_charge_short;
         uint16_t fchannel_charge_long;
         double fchannel_energy;

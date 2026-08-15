@@ -128,7 +128,7 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
         
         // Initialiser for cal specific prarams
         double channel_energy = 0;
-        uint32_t channel_time = 0;
+        double channel_time = 0.;
         
         // int nfired_segments = 0;
         // int64_t fevent_trigger_time = 0;
@@ -161,7 +161,7 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
             // int64_t event_trigger_time = funcal_hit->Get_channel_trigger_time();
             uint32_t channel_time_tag = funcal_hit->Get_channel_time_tag();
             uint32_t channel_fine_time = funcal_hit->Get_channel_fine_time(); // in ns
-            channel_time = 1000*(channel_time_tag & 0x3FFFFFu) | ((channel_fine_time & 0x3FFu) << 22); // in ps
+            channel_time = (double)channel_time_tag + ((double)(channel_fine_time & 0x3FFu) / 1024.);
             uint16_t channel_charge_short = funcal_hit->Get_channel_charge_short();
             uint16_t channel_charge_long = funcal_hit->Get_channel_charge_long();
             // int32_t uncal_energy = funcal_hit->Get_channel_energy();
