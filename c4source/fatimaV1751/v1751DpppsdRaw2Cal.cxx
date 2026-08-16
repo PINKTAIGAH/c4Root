@@ -26,9 +26,7 @@
 #include "c4Logger.h"
 
 // c4
-// #include "GermaniumFebexData.h"
-// #include "AgataSuperTraceData.h"
-// #include "TAgataConfiguration.h"
+#include "TFatimaVmeConfiguration.h"
 
 #include "v1751DpppsdData.h"
 #include "FatimaV1751Data.h"
@@ -48,8 +46,7 @@ v1751DpppsdRaw2Cal::v1751DpppsdRaw2Cal()
   funcal_data(new TClonesArray("v1751DpppsdData")),
   fcal_data(new TClonesArray("FatimaV1751Data"))
   {
-      // Add later for inline energy calibration
-      // agata_configuration = TAgataConfiguration::GetInstance();
+      fatima_vme_config = FatimaV1751Configuration::GetInstance();
   }
 
 /*
@@ -63,8 +60,7 @@ v1751DpppsdRaw2Cal::v1751DpppsdRaw2Cal(const TString& name, Int_t verbose)
   funcal_data(new TClonesArray("v1751DpppsdData")),
   fcal_data(new TClonesArray("FatimaV1751Data"))
   {
-      // Add later for inline energy calibration
-      // agata_configuration = TAgataConfiguration::GetInstance();
+      fatima_vme_config = FatimaV1751Configuration::GetInstance();
   }
 
 v1751DpppsdRaw2Cal::~v1751DpppsdRaw2Cal(){
@@ -97,6 +93,8 @@ InitStatus v1751DpppsdRaw2Cal::Init()
  
     // needs to have the name of the detector subsystem here:
     FairRootManager::Instance()->Register("FatimaV1751Data", "Fatima Cal Data", fcal_data, !fOnline);
+
+    calib_coeffs_QDC_E = fatima_vme_config->QDC_E_Calib();
     
     fcal_data->Clear();
 
@@ -113,6 +111,14 @@ InitStatus v1751DpppsdRaw2Cal::Init()
 //     // returns the value x when y(x) = threshold
 //     return threshold/(val2-val1);
 // }
+
+double v1751DpppsdRaw2Cal::Calibrate_QDC_E(double E, int det_id)
+{
+    double Energy_c = calib_coeffs_QDC_E[det_id][0];
+    for (int i = 1; i < 4; i++) Energy_c = Energy_c * E + calib_coeffs_QDC_E[det_id][i];
+    Energy_c += (static_cast<double>(rand()) / static_cast<double>(RAND_MAX + 0.5));
+    return Energy_c;
+}
 
 /*
 Analysis event loop. 
@@ -156,8 +162,9 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
         {
             funcal_hit = (v1751DpppsdData*)funcal_data->At(ihit);
 
-            int board_id = funcal_hit->Get_board_id();
-            int channel_id = funcal_hit->Get_channel_id();
+            uint8_t board_id = funcal_hit->Get_board_id();
+            uint8_t channel_id = funcal_hit->Get_channel_id();
+            uint8_t detector_id = funcal_hit->Get_detector_id();
             // int64_t event_trigger_time = funcal_hit->Get_channel_trigger_time();
             uint32_t channel_time_tag = funcal_hit->Get_channel_time_tag();
             uint32_t channel_fine_time = funcal_hit->Get_channel_fine_time(); // in ns
@@ -165,17 +172,19 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
             uint16_t channel_charge_short = funcal_hit->Get_channel_charge_short();
             uint16_t channel_charge_long = funcal_hit->Get_channel_charge_long();
             // int32_t uncal_energy = funcal_hit->Get_channel_energy();
+            channel_energy = (fatima_vme_config->ECalibLoaded()) ? Calibrate_QDC_E((double)channel_charge_long, (int) detector_id) : 0.;
 
             event.Set_num_channels_fired(event_multiplicity);
             event.Set_board_id(board_id);
             event.Set_channel_id(channel_id);
+            event.Set_detector_id(detector_id);
             event.Set_channel_time_tag(channel_time_tag);
             event.Set_channel_fine_time(channel_fine_time);
             event.Set_channel_time(channel_time);
             event.Set_channel_charge_short(channel_charge_short);
             event.Set_channel_charge_long(channel_charge_long);
+            event.Set_channel_energy(channel_energy);
 
-            event.Set_channel_energy(0);
             event.Set_wr_subsystem_id(0);
             event.Set_wr_t(0);
 
@@ -187,133 +196,6 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
         
         }
 
-            // if (uncal_energy < 0) uncal_energy = 0;
-
-            // char sector = agata_configuration->GetDetectorID(board_id,channel_id).first;
-            // int layer = agata_configuration->GetDetectorID(board_id,channel_id).second;
-            
-            // if (layer == -1) continue;
-            // if (agata_configuration->GetCalibrationCoeff(board_id,channel_id).size() <= 1) c4LOG(fatal,"Failed to read the coeffs");
-
-            // double a0 = agata_configuration->GetCalibrationCoeff(board_id,channel_id).at(0);
-            // double a1 = agata_configuration->GetCalibrationCoeff(board_id,channel_id).at(1);
-
-
-            //c4LOG(info, Form("bid = %i, chid = %i, un = %i, en = %f, a0 = %f, a1 = %f, sec = %c, layer = %i",board_id,channel_id,uncal_energy,(double)(uncal_energy)*a1+a0, a0, a1,sector,layer));
-
-            ////////////////
-
-        //     if (layer == 1 && sector == 'S'){
-        //         fhit_pattern |= (int64_t(1) << 0);  
-                
-        //         event.Set_event_trigger_time(event_trigger_time);
-        //         event.Set_core_trigger_time(channel_trigger_time);
-        //         event.Set_core_energy((double)(uncal_energy)*a1 + a0);
-
-        //         double baseline_corr = 0;
-        //         int nsamples = 30;
-
-        //         for (int i = 0; i<nsamples; i++) baseline_corr += funcal_hit->Get_trace_value(i);
-        //         baseline_corr/=nsamples;
-
-        //         for (int i = 0; i<trace_length; i++) supertrace[i] = funcal_hit->Get_trace_value(i) - baseline_corr;
-
-        //     }else{
-        //         segid = ((int)sector-65)*6 + layer - 1;
-        //         if (uncal_energy != 0){
-        //             fhit_pattern |= (int64_t(1) << segid+1);
-        //             seg_energies[segid] = (double)(uncal_energy)*a1 + a0;
-        //             seg_times[segid] = channel_trigger_time;
-        //         }
-
-
-        //         double baseline_corr = 0;
-        //         int nsamples = 30;
-
-        //         for (int i = 0; i<nsamples; i++) baseline_corr += funcal_hit->Get_trace_value(i);
-        //         baseline_corr/=nsamples;
-
-        //         int max_amp_i = 0;
-        //         for (int i = 0; i<trace_length; i++) {
-        //             supertrace[i + trace_length*(segid+1)] = funcal_hit->Get_trace_value(i) - baseline_corr; 
-
-        //             if (supertrace[i + trace_length*(segid+1)] > supertrace[max_amp_i + trace_length*(segid+1)]) max_amp_i = i;
-        //         }
-
-        //         //int end_i = std::min(trace_length, max_amp_i + normsamples);
-        //         for (int i = trace_length-normsamples; i<trace_length; i++) normalization[segid] += supertrace[i + trace_length*(segid+1)];
-        //         normalization[segid]/=normsamples;
-        //     }
-        // }
-
-        // event.Set_all_segment_energy(seg_energies);
-        // event.Set_all_segment_trigger_time(seg_times);
-
-
-        // //normalization:
-        // double max_segment = 0;
-        // int id_max_segment = 0;
-        // for (int i = 0;i<36;i++){
-        //     if (seg_energies[i] > max_segment) {
-        //         max_segment = seg_energies[i];
-        //         id_max_segment = i;
-        //     }
-        // }
-        // //normalization:
-        // double max_segment_normalization = 0;
-        // int id_max_segment_normalization = 0;
-        // for (int i = 0;i<36;i++){
-        //     if (normalization[i] > max_segment_normalization) {
-        //         max_segment_normalization = normalization[i];
-        //         id_max_segment_normalization = i;
-        //     }
-        // }
-        
-        // for (int i = 0; i<supertrace_length;i++) supertrace[i] = supertrace[i]*1000/max_segment_normalization;
-
-
-        // int index_time_cross = 0;
-        // double time_shift_frac = 0;
-        // double threshold = 300;
-
-        // for (int i = supertrace_length/37*(id_max_segment+1); i<(supertrace_length/37)*(id_max_segment+2); i++){
-        //     if (supertrace[i] > threshold){
-        //         time_shift_frac = GetFrac(supertrace[i-1],supertrace[i],threshold);
-        //         index_time_cross = i-1 - supertrace_length/37*(id_max_segment+1);
-        //         break;
-        //     }
-        // }
-
-        // //index_time_cross should be at t = 60?
-        // //c4LOG(info,time_shift_frac);
-        // int centerat = 80;
-        // for (int iseg = 1; iseg <= 36; iseg++){
-
-        //     for (int itrace = supertrace_length/37*iseg; itrace<supertrace_length/37*(iseg+1);itrace++) {
-        //         if ( itrace + (index_time_cross - centerat) < supertrace_length/37*iseg ) {supertrace_shifted[itrace] = -1000; continue;}
-        //         if ( itrace + (index_time_cross - centerat) >= supertrace_length/37*(iseg+1) ) {supertrace_shifted[itrace] = -1000; continue;}
-
-        //         supertrace_shifted[itrace] = supertrace[itrace + (index_time_cross - centerat)] + LinearInterp(time_shift_frac, supertrace[itrace + (index_time_cross - centerat)], supertrace[itrace + (index_time_cross - centerat)]+1);
-        //     }
-        // }
-
-
-
-        // event.Set_supertrace(supertrace_shifted);
-
-        // bool set_write =  (channel_) true;
-        // if (energy_gate > 10){
-            // double energy1 = event.Get_core_energy();
-            // double energy2 = seg_energies[id_max_segment];
-
-            // double energysum = 0;
-            // for (int i=0;i<36;i++) energysum += seg_energies[i];
-
-            // if (TMath::Abs(energy2 - energy_gate) < energy_gate_width) set_write = true;
-            // else set_write = false;
-        // }
-        
-        // if (set_write) new ((*fcal_data)[fcal_data->GetEntriesFast()]) AgataSuperTraceData(event);  
     }
 }
 

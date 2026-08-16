@@ -22,6 +22,7 @@ class FatimaV1751Configuration
         int NQDCBoards() const;
         int NDetectors() const;
         bool MappingLoaded() const;
+        bool ECalibLoaded() const;
         double** QDC_E_Calib() const;
         // double* QDC_T_Calib() const;
 
@@ -48,6 +49,7 @@ class FatimaV1751Configuration
         // int num_tdc_boards;
 
         bool DetectorMap_loaded = 0;
+        bool ECalibFile_loaded = 0;
 
 };
 
@@ -90,6 +92,11 @@ inline int FatimaV1751Configuration::NDetectors() const
 inline bool FatimaV1751Configuration::MappingLoaded() const
 {
     return DetectorMap_loaded;
+}
+
+inline bool FatimaV1751Configuration::ECalibLoaded() const
+{
+    return ECalibFile_loaded;
 }
 
 

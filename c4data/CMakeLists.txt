@@ -51,6 +51,7 @@ bplastData/TbPlastConfiguration.cxx
 beammonitorData/BeamMonitorData.cxx
 fatimaData/FatimaTwinpeaksData.cxx
 fatimaData/FatimaTwinpeaksCalData.cxx
+fatimaV1751Data/FatimaV1751Configuration.cxx
 fatimaV1751Data/FatimaV1751Data.cxx
 fatimaV1751Data/v1751DpppsdData.cxx
 fatimaData/TFatimaTwinpeaksConfiguration.cxx

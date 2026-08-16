@@ -5,6 +5,9 @@
 #include "FairRunOnline.h"
 
 #include <Rtypes.h>
+#include <unordered_map>
+#include <map>
+#include <set>
 
 extern "C"
 {
@@ -60,7 +63,9 @@ class v1751DpppsdReader : public c4Reader
         bool ControlOutput = false;
 
 
-        const int NBoards = 1; //change
+        int NBoards = 1; //change
+
+        std::map<std::pair<int, int>, int> dets_qdc;
 
         uint64_t event_trigger_time_long;
         uint64_t channel_trigger_time_long;

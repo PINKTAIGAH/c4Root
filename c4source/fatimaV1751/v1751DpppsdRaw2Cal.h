@@ -2,8 +2,12 @@
 #define V1751DpppsddRaw2Cal_H
 
 #include "FairTask.h"
-// #include "TAgataConfiguration.h"
+#include "FatimaV1751Configuration.h"
 #include "FatimaV1751Data.h"
+
+#include <vector>
+#include <set>
+#include <map>
 
 class TClonesArray;
 class EventHeader;
@@ -30,12 +34,7 @@ class v1751DpppsdRaw2Cal : public FairTask
 
         virtual InitStatus Init();
 
-        // Helper functions for future raw2cal analysis
-        
-        // double LinearInterp(double,double,double);
-        // double GetFrac(double,double,double);
-
-        // void SetEnergyGate(double energy, double tol){energy_gate = energy; energy_gate_width = tol;}
+        double Calibrate_QDC_E(double E, int det_id);
 
     private:
         Bool_t fOnline;
@@ -43,8 +42,7 @@ class v1751DpppsdRaw2Cal : public FairTask
         TClonesArray* fcal_data;
         TClonesArray* funcal_data;
         
-        // Add later for configuration
-        // const TAgataConfiguration *  agata_configuration;
+        FatimaV1751Configuration const* fatima_vme_config;
 
         v1751DpppsdData* funcal_hit;
         FatimaV1751Data* fcal_hit;
@@ -54,6 +52,9 @@ class v1751DpppsdRaw2Cal : public FairTask
 
         // double energy_gate = 0;
         // double energy_gate_width = 0;
+        
+        // Calib params
+        double** calib_coeffs_QDC_E;
 
 
 

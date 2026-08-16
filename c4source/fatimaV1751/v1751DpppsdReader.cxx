@@ -21,6 +21,7 @@
 // c4
 #include "v1751DpppsdReader.h"
 #include "v1751DpppsdData.h"
+#include "FatimaV1751Configuration.h"
 // #include "QDCData.h"
 #include "c4Logger.h"
 
@@ -66,6 +67,11 @@ Bool_t v1751DpppsdReader::Init(ext_data_struct_info* a_struct_info)
     FairRootManager::Instance()->Register("v1751DpppsdData", "FATIMA v1751 Data", fArray, !fOnline);
     fArray->Clear();
 
+
+    // Get configuration singleton`
+    FatimaV1751Configuration const* fatima_conf = FatimaV1751Configuration::GetInstance();
+    NBoards = fatima_conf->NQDCBoards();
+    dets_qdc = fatima_conf->QDCMapping();
 
     // // Register output array in a tree
     // FairRootManager::Instance()->Register("QDCData", "QDC V792 Data", fArrayqdc, !fOnline);
@@ -154,8 +160,10 @@ Bool_t v1751DpppsdReader::Read()
 
     for (int ich = 0; ich<8; ich++){
         if (*vme_v1751_channels[ich] == 0) continue; // not fired, skip.
+        
+        uint8_t current_detector_id = dets_qdc[std::make_pair(board_id, ich)]; // get detector id
         v1751DpppsdData * event = new v1751DpppsdData(
-          nfired_ch,board_id,ich,*vme_v1751_trigger_time[ich],*vme_v1751_fine_time[ich],*vme_v1751_charge_short[ich],*vme_v1751_charge_long[ich],
+          nfired_ch,board_id,ich,current_detector_id,*vme_v1751_trigger_time[ich],*vme_v1751_fine_time[ich],*vme_v1751_charge_short[ich],*vme_v1751_charge_long[ich],
           0,0 // last two are WR, change if want to add it in
         );
         event->Set_length(*vme_v1751_sample_trace[ich]);

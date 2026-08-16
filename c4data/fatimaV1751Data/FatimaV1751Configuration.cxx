@@ -26,8 +26,7 @@
 FatimaV1751Configuration* FatimaV1751Configuration::instance = nullptr;
 std::string FatimaV1751Configuration::mapfilepath = "Fatima_channel_allocation.txt";
 std::string FatimaV1751Configuration::qdc_e_calfilepath = "";
-std::string FatimaV1751Configuration::qdc_t_calfilepath = "";
-std::string FatimaV1751Configuration::tdc_t_calfilepath = "";
+// std::string FatimaV1751Configuration::qdc_t_calfilepath = "";
 
 FatimaV1751Configuration::FatimaV1751Configuration()
     :   num_detectors(0)
@@ -110,6 +109,7 @@ void FatimaV1751Configuration::Read_QDC_E_Calibration()
             calib_coeffs_QDC_E[det_id][i] = tmp_coeffs[i];
             original_calib_coeffs_QDC_E[det_id][i] = tmp_coeffs[i];
         }
+        ECalibFile_loaded = true;
     }
 }
 

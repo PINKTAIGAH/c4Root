@@ -59,8 +59,9 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
     source->SetMaxEvents(nev);
     run->SetSource(source);
 
-    // TLYSOConfiguration::SetDetectorConfigurationFile("../data/lyso_config_2025.txt");
-    // TAgataConfiguration::SetDetectorConfigurationFile("../data/agata_config.txt");
+
+    FatimaV1751Configuration::SetDetectorConfigurationFile("../../config/fatima_test/Fatima_v1751_allocation.txt");
+    FatimaV1751Configuration::Set_Qdc_E_CalFile("../../config/fatima_test/fatima_v1751_ecalib.txt");
 
     // ------------------------------------------------------------------------------------- //
     // *** Read Subsystems - comment out unwanted systems ********************************** //

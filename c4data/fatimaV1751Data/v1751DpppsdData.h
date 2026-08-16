@@ -15,6 +15,7 @@ class v1751DpppsdData : public TObject
                         uint32_t num_channels_fired,
                         uint8_t board_id,
                         uint8_t channel_id,
+                        uint8_t detector_id,
                         uint32_t channel_time_tag,
                         uint32_t channel_fine_time,
                         uint16_t channel_charge_short,
@@ -30,6 +31,7 @@ class v1751DpppsdData : public TObject
         inline const uint32_t Get_num_channels_fired() const { return fnum_channels_fired; }
         inline const uint8_t Get_board_id() const { return fboard_id; }
         inline const uint8_t Get_channel_id() const { return fchannel_id; }
+        inline const uint8_t Get_detector_id() const { return fdetector_id; }
         inline const uint32_t Get_channel_time_tag() const { return fchannel_time_tag; }
         inline const uint32_t Get_channel_fine_time() const { return fchannel_fine_time; }
         inline const uint16_t Get_channel_charge_short() const { return fchannel_charge_short; }
@@ -51,6 +53,7 @@ class v1751DpppsdData : public TObject
         void Set_num_channels_fired(uint32_t v) { fnum_channels_fired = v; }
         void Set_board_id(uint8_t v) { fboard_id = v; }
         void Set_channel_id(uint8_t v) { fchannel_id = v; }
+        void Set_detector_id(uint8_t v) { fdetector_id = v; }
         void Set_channel_time_tag(uint32_t v) { fchannel_time_tag = v; }
         void Set_channel_fine_time(uint32_t v) { fchannel_fine_time = v; }
         void Set_channel_charge_short(uint16_t v) { fchannel_charge_short = v; }
@@ -69,6 +72,7 @@ class v1751DpppsdData : public TObject
         uint32_t fnum_channels_fired;
         uint8_t fboard_id;
         uint8_t fchannel_id;
+        uint8_t fdetector_id;
         uint32_t fchannel_time_tag;
         uint32_t fchannel_fine_time;
         uint16_t fchannel_charge_short;
