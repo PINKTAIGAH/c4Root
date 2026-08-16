@@ -174,6 +174,8 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
             // int32_t uncal_energy = funcal_hit->Get_channel_energy();
             channel_energy = (fatima_vme_config->ECalibLoaded()) ? Calibrate_QDC_E((double)channel_charge_long, (int) detector_id) : 0.;
 
+            // c4LOG(info, Form("RAW2CAL :: bid = %i, chid = %i, detid = %i, calib?= %i, e = %f",board_id,channel_id,detector_id,fatima_vme_config->ECalibLoaded(),channel_energy));
+
             event.Set_num_channels_fired(event_multiplicity);
             event.Set_board_id(board_id);
             event.Set_channel_id(channel_id);

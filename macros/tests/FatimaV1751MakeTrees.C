@@ -60,8 +60,8 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
     run->SetSource(source);
 
 
-    FatimaV1751Configuration::SetDetectorConfigurationFile("../../config/fatima_test/Fatima_v1751_allocation.txt");
-    FatimaV1751Configuration::Set_Qdc_E_CalFile("../../config/fatima_test/fatima_v1751_ecalib.txt");
+    FatimaV1751Configuration::SetDetectorMapFile("/lustre/gamma/gbrunic/FatimaTest/c4Root/config/fatima_test/Fatima_v1751_allocation.txt");
+    FatimaV1751Configuration::Set_QDC_E_CalFile("/lustre/gamma/gbrunic/FatimaTest/c4Root/config/fatima_test/fatima_v1751_ecalib.txt");
 
     // ------------------------------------------------------------------------------------- //
     // *** Read Subsystems - comment out unwanted systems ********************************** //

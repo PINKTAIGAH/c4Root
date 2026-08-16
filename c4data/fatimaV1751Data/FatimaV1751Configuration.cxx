@@ -17,6 +17,7 @@
 #include "FatimaV1751Configuration.h"
 
 #include "c4Logger.h"
+#include "TString.h"
 
 #include <iostream>
 #include <sstream>
@@ -109,8 +110,8 @@ void FatimaV1751Configuration::Read_QDC_E_Calibration()
             calib_coeffs_QDC_E[det_id][i] = tmp_coeffs[i];
             original_calib_coeffs_QDC_E[det_id][i] = tmp_coeffs[i];
         }
-        ECalibFile_loaded = true;
     }
+    ECalibFile_loaded = true;
 }
 
 // void FatimaV1751Configuration::Read_QDC_T_Calibration()

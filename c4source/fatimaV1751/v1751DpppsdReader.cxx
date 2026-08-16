@@ -162,6 +162,7 @@ Bool_t v1751DpppsdReader::Read()
         if (*vme_v1751_channels[ich] == 0) continue; // not fired, skip.
         
         uint8_t current_detector_id = dets_qdc[std::make_pair(board_id, ich)]; // get detector id
+        // c4LOG(info, Form("READER :: bid = %i, chid = %i, detid = %i,",board_id,ich,current_detector_id));
         v1751DpppsdData * event = new v1751DpppsdData(
           nfired_ch,board_id,ich,current_detector_id,*vme_v1751_trigger_time[ich],*vme_v1751_fine_time[ich],*vme_v1751_charge_short[ich],*vme_v1751_charge_long[ich],
           0,0 // last two are WR, change if want to add it in
