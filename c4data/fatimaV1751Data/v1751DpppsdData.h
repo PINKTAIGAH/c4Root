@@ -17,6 +17,7 @@ class v1751DpppsdData : public TObject
                         uint8_t channel_id,
                         uint8_t detector_id,
                         uint32_t channel_time_tag,
+                        uint32_t channel_extended_time,
                         uint32_t channel_fine_time,
                         uint16_t channel_charge_short,
                         uint16_t channel_charge_long,
@@ -33,6 +34,7 @@ class v1751DpppsdData : public TObject
         inline const uint8_t Get_channel_id() const { return fchannel_id; }
         inline const uint8_t Get_detector_id() const { return fdetector_id; }
         inline const uint32_t Get_channel_time_tag() const { return fchannel_time_tag; }
+        inline const uint32_t Get_channel_extended_time() const { return fchannel_extended_time; }
         inline const uint32_t Get_channel_fine_time() const { return fchannel_fine_time; }
         inline const uint16_t Get_channel_charge_short() const { return fchannel_charge_short; }
         inline const uint16_t Get_channel_charge_long() const { return fchannel_charge_long; }
@@ -55,6 +57,7 @@ class v1751DpppsdData : public TObject
         void Set_channel_id(uint8_t v) { fchannel_id = v; }
         void Set_detector_id(uint8_t v) { fdetector_id = v; }
         void Set_channel_time_tag(uint32_t v) { fchannel_time_tag = v; }
+        void Set_channel_extended_time(uint32_t v) { fchannel_extended_time = v; }
         void Set_channel_fine_time(uint32_t v) { fchannel_fine_time = v; }
         void Set_channel_charge_short(uint16_t v) { fchannel_charge_short = v; }
         void Set_channel_charge_long(uint16_t v) { fchannel_charge_long = v; }
@@ -74,6 +77,7 @@ class v1751DpppsdData : public TObject
         uint8_t fchannel_id;
         uint8_t fdetector_id;
         uint32_t fchannel_time_tag;
+        uint32_t fchannel_extended_time;
         uint32_t fchannel_fine_time;
         uint16_t fchannel_charge_short;
         uint16_t fchannel_charge_long;

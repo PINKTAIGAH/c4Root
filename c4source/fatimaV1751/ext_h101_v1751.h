@@ -59,6 +59,14 @@ typedef struct EXT_STR_h101_v1751_t
   uint32_t vme_v1751_trigger_time6 /* [-1,-1] */;
   uint32_t vme_v1751_trigger_time7 /* [-1,-1] */;
   uint32_t vme_v1751_trigger_time8 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time1 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time2 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time3 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time4 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time5 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time6 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time7 /* [-1,-1] */;
+  uint32_t vme_v1751_extended_time8 /* [-1,-1] */;
   uint32_t vme_v1751_fine_time1 /* [-1,-1] */;
   uint32_t vme_v1751_fine_time2 /* [-1,-1] */;
   uint32_t vme_v1751_fine_time3 /* [-1,-1] */;
@@ -149,6 +157,14 @@ typedef struct EXT_STR_h101_v1751_onion_t
   uint32_t vme_v1751_trigger_time6;
   uint32_t vme_v1751_trigger_time7;
   uint32_t vme_v1751_trigger_time8;
+  uint32_t vme_v1751_extended_time1;
+  uint32_t vme_v1751_extended_time2;
+  uint32_t vme_v1751_extended_time3;
+  uint32_t vme_v1751_extended_time4;
+  uint32_t vme_v1751_extended_time5;
+  uint32_t vme_v1751_extended_time6;
+  uint32_t vme_v1751_extended_time7;
+  uint32_t vme_v1751_extended_time8;
   uint32_t vme_v1751_fine_time1 /* [-1,-1] */;
   uint32_t vme_v1751_fine_time2 /* [-1,-1] */;
   uint32_t vme_v1751_fine_time3 /* [-1,-1] */;
@@ -286,6 +302,30 @@ typedef struct EXT_STR_h101_v1751_onion_t
   EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
                      vme_v1751_trigger_time8,         UINT32,\
                     "vme_v1751_trigger_time8",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time1,         UINT32,\
+                    "vme_v1751_extended_time1",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time2,         UINT32,\
+                    "vme_v1751_extended_time2",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time3,         UINT32,\
+                    "vme_v1751_extended_time3",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time4,         UINT32,\
+                    "vme_v1751_extended_time4",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time5,         UINT32,\
+                    "vme_v1751_extended_time5",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time6,         UINT32,\
+                    "vme_v1751_extended_time6",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time7,         UINT32,\
+                    "vme_v1751_extended_time7",0/*flags*/); \
+  EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
+                     vme_v1751_extended_time8,         UINT32,\
+                    "vme_v1751_extended_time8",0/*flags*/); \
   EXT_STR_ITEM_INFO2    (ok,si,offset,struct_t,printerr,\
                      vme_v1751_fine_time1,         UINT32,\
                     "vme_v1751_fine_time1",0/*flags*/); \

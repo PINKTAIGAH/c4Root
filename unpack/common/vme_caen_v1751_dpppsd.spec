@@ -22,6 +22,7 @@ VME_CAEN_V1751_DPPPSD(geom)
     // (from the charge word, bits 0-14 and 16-31 respectively).
     // Layout depends on the board's EXTRAS format setting; this matches
     // Extras Format 2 (fine timestamp only), as used in the Go4 unpacker.
+    MEMBER(DATA16 extended_time[8]);
     MEMBER(DATA16 fine_time[8]);
     MEMBER(DATA16 q_short[8]);
     MEMBER(DATA16 q_long[8]);
@@ -117,9 +118,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[0], (value=fine_time));
+            ENCODE(extended_time[0], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {
@@ -174,9 +177,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[1], (value=fine_time));
+            ENCODE(extended_time[1], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {
@@ -231,9 +236,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[2], (value=fine_time));
+            ENCODE(extended_time[2], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {
@@ -288,9 +295,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[3], (value=fine_time));
+            ENCODE(extended_time[3], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {
@@ -345,9 +354,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[4], (value=fine_time));
+            ENCODE(extended_time[4], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {
@@ -402,9 +413,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[5], (value=fine_time));
+            ENCODE(extended_time[5], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {
@@ -459,9 +472,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[6], (value=fine_time));
+            ENCODE(extended_time[6], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {
@@ -516,9 +531,11 @@ VME_CAEN_V1751_DPPPSD(geom)
         UINT32 extras NOENCODE
         {
             0_9: fine_time;
-            10_31: extras_other; // unused/unspecified in EXTRAS Format 2
+            10_15: extra_flags; // Flags in EXTRAS Format 2 (0b010)
+            16_31: extended_time;
 
             ENCODE(fine_time[7], (value=fine_time));
+            ENCODE(extended_time[7], (value=extended_time));
         };
         UINT32 charge NOENCODE
         {

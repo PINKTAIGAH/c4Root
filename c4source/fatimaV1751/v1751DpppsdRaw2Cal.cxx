@@ -167,9 +167,13 @@ void v1751DpppsdRaw2Cal::Exec(Option_t* option)
             uint8_t detector_id = funcal_hit->Get_detector_id();
             // int64_t event_trigger_time = funcal_hit->Get_channel_trigger_time();
             uint32_t channel_time_tag = funcal_hit->Get_channel_time_tag();
-            uint32_t channel_fine_time = funcal_hit->Get_channel_fine_time(); // in ns
-            channel_time = (double)channel_time_tag + ((double)(channel_fine_time & 0x3FFu) / 1024.);
-            uint16_t channel_charge_short = funcal_hit->Get_channel_charge_short();
+            uint32_t channel_extended_time = funcal_hit->Get_channel_extended_time(); // in ticks 
+            uint32_t channel_fine_time = funcal_hit->Get_channel_fine_time(); // in ticks 
+            
+            uint64_t channel_coarse_time = ((uint64_t)channel_extended_time << 32) | (uint64_t)channel_time_tag;
+            channel_time = (double)channel_coarse_time * 1.0 + (double)channel_fine_time / 1024.0;;
+            // channel_time = (double)channel_time_tag + ((double)(channel_fine_time & 0x3FFu) / 1024.); // in ns
+            uint16_t channel_charge_short = funcal_hit->Get_channel_charge_short(); 
             uint16_t channel_charge_long = funcal_hit->Get_channel_charge_long();
             // int32_t uncal_energy = funcal_hit->Get_channel_energy();
             channel_energy = (fatima_vme_config->ECalibLoaded()) ? Calibrate_QDC_E((double)channel_charge_long, (int) detector_id) : 0.;
