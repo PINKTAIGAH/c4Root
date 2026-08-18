@@ -10,7 +10,9 @@ typedef struct EXT_STR_h101_t
 
 int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
 {   
-    const Int_t nev = 1000000; const Int_t fRunId = 1; const Int_t fExpId = 1;
+    const Int_t nev = -1; // Process all events
+    const Int_t fRunId = 1; 
+    const Int_t fExpId = 1;
 
     TString ucesb_path = "/lustre/gamma/gbrunic/FatimaTest/c4Root/unpack/exps/onlyFatimaVme/onlyFatimaVme  --input-buffer=200Mi --event-sizes --allow-errors --data";
 
