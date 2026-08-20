@@ -8,7 +8,7 @@ typedef struct EXT_STR_h101_t
 } EXT_STR_h101;
 
 
-int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
+int FatimaV1751Online()
 {   
     const Int_t nev = -1; // Process all events
     // const Int_t nev = 1000000; // Process all events
@@ -28,7 +28,10 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
     //TString filename = "/data.local1/lustre/despec/ScannerSummer/QDCPedestalCalibration/lyso_qdc_cal_0002_0001.lmd"; // timesorter.
     //TString filename = "/data.local1/lustre/despec/ScannerSummer/QDCPedestalCalibration/lyso_standalone_trigger_0001_000*.lmd";
     //TString filename = "/data.local1/lustre/despec/ScannerSummer/TraceScan2/scan_front_0006_0688.lmd";
+    TString filename = "/lustre/gamma/gbrunic/FatimaTest/data/152Eu_8_det.lmd";
     // TString filename = "stream://r4l-62";
+
+    TString outputfile = "/lustre/gamma/gbrunic/FatimaTest/onlineAutoSave.root";
 
     // Macro timing
     TString cRunId = Form("%04d", fRunId);
@@ -41,25 +44,25 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
     timer.Start();
     
     // // Create Online run
-    // Int_t refresh = 1; // Refresh rate for online histograms
-    // Int_t port = 5010; // 
+    Int_t refresh = 1; // Refresh rate for online histograms
+    Int_t port = 5010; // 
 
     FairRunOnline* run = new FairRunOnline();
     EventHeader* EvtHead = new EventHeader();
     run->SetEventHeader(EvtHead);
     run->SetRunId(1);
     run->SetSink(new FairRootFileSink(outputfile));
-    // run->ActivateHttpServer(refresh, port);
+    run->ActivateHttpServer(refresh, port);
 
-    // TFolder* histograms = new TFolder("Histograms", "Histograms");
-    // FairRootManager::Instance()->Register("Histograms", "Histogram Folder", histograms, false);
-    // run->AddObject(histograms);
+    TFolder* histograms = new TFolder("Histograms", "Histograms");
+    FairRootManager::Instance()->Register("Histograms", "Histogram Folder", histograms, false);
+    run->AddObject(histograms);
 
 
     // Create source using ucesb for input
     EXT_STR_h101 ucesb_struct;
     TString ntuple_options = "UNPACK"; // Define which level of data to unpack - we don't use "RAW" or "CAL"
-    UcesbSource* source = new UcesbSource(inputfile, ntuple_options, ucesb_path, &ucesb_struct, sizeof(ucesb_struct));
+    UcesbSource* source = new UcesbSource(filename, ntuple_options, ucesb_path, &ucesb_struct, sizeof(ucesb_struct));
     source->SetMaxEvents(nev);
     run->SetSource(source);
 
@@ -83,14 +86,17 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
     */
     
     v1751DpppsdReader* unpack_v1751 = new v1751DpppsdReader((EXT_STR_h101_v1751_onion*)&ucesb_struct.fatima, offsetof(EXT_STR_h101, fatima));
-    unpack_v1751->SetOnline(false);
+    unpack_v1751->SetOnline(true);
     unpack_v1751->SetControlOutput(true);
     unpack_v1751->SetMultiplicityOutput(1); // Change for different multiplicity counters
     source->AddReader(unpack_v1751);
 
     v1751DpppsdRaw2Cal* fatima_cal = new v1751DpppsdRaw2Cal();
-    fatima_cal->SetOnline(false);
+    fatima_cal->SetOnline(true);
     run->AddTask(fatima_cal);
+
+    FatimaV1751OnlineSpectra* onlinefatimav1751 = new FatimaV1751OnlineSpectra();
+    run->AddTask(onlinefatimav1751);
 
     /*
     LYSORaw2Cal* lyso_cal = new LYSORaw2Cal();
@@ -120,10 +126,10 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
     FairLogger::GetLogger()->SetLogScreenLevel("info");
 
     // Information about portnumber and main data stream
-    // cout << "\n\n" << endl;
-    // cout << "Data stream is: " << filename << endl;
-    // cout << "Online port server: " << port << endl;
-    // cout << "\n\n" << endl;
+    cout << "\n\n" << endl;
+    cout << "Data stream is: " << filename << endl;
+    cout << "Online port server: " << port << endl;
+    cout << "\n\n" << endl;
 
     // create sink object before run starts    
     FairSink* sf = FairRunOnline::Instance()->GetSink();

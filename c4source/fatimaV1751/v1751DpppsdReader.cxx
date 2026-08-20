@@ -168,15 +168,30 @@ Bool_t v1751DpppsdReader::Read()
         
         uint8_t current_detector_id = dets_qdc[std::make_pair(board_id, ich)]; // get detector id
         // c4LOG(info, Form("READER :: bid = %i, chid = %i, detid = %i,",board_id,ich,current_detector_id));
-        v1751DpppsdData * event = new v1751DpppsdData(
-          nfired_ch,board_id,ich,current_detector_id,*vme_v1751_trigger_time[ich],*vme_v1751_extended_time[ich],*vme_v1751_fine_time[ich],*vme_v1751_charge_short[ich],*vme_v1751_charge_long[ich],
-          0,0 // last two are WR, change if want to add it in
+        
+        // !!!! THIS CAUSES A MEMORY LEAK !!!!! 
+        // v1751DpppsdData * event = new v1751DpppsdData(
+        //   nfired_ch,board_id,ich,current_detector_id,*vme_v1751_trigger_time[ich],*vme_v1751_extended_time[ich],*vme_v1751_fine_time[ich],*vme_v1751_charge_short[ich],*vme_v1751_charge_long[ich],
+        //   0,0 // last two are WR, change if want to add it in
+        // );
+        // event->Set_length(*vme_v1751_sample_trace[ich]);
+        // for (int it = 0; it<*vme_v1751_sample_trace[ich];it++){
+        //     event->Set_trace_val((uint16_t)((*vme_v1751_sample_traceV[ich])[it]), it);
+        // }
+        // new ((*fArray)[fArray->GetEntriesFast()]) v1751DpppsdData(*event);
+        // !!!! THIS CAUSES A MEMORY LEAK !!!!! 
+        
+        // FIX
+        auto* event = new ((*fArray)[fArray->GetEntriesFast()]) v1751DpppsdData(
+            nfired_ch, board_id, ich, current_detector_id,
+            *vme_v1751_trigger_time[ich], *vme_v1751_extended_time[ich],
+            *vme_v1751_fine_time[ich], *vme_v1751_charge_short[ich], *vme_v1751_charge_long[ich],
+            0,0 // last two are WR, change if want to add it in
         );
         event->Set_length(*vme_v1751_sample_trace[ich]);
-        for (int it = 0; it<*vme_v1751_sample_trace[ich];it++){
+        for (int it = 0; it < *vme_v1751_sample_trace[ich]; it++){
             event->Set_trace_val((uint16_t)((*vme_v1751_sample_traceV[ich])[it]), it);
         }
-        new ((*fArray)[fArray->GetEntriesFast()]) v1751DpppsdData(*event);
     }
 
     if (!fOnline && ControlOutput){

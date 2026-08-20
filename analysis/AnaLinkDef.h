@@ -23,6 +23,7 @@
 #pragma link C++ class LisaOnlineSpectraDaq+;
 #pragma link C++ class FatimaOnlineSpectra+;
 #pragma link C++ class FatimaVmeOnlineSpectra+;
+#pragma link C++ class FatimaV1751OnlineSpectra+;
 #pragma link C++ class TimeMachineOnline+;
 #pragma link C++ class BB7OnlineSpectra+;
 #pragma link C++ class BB7FebexOnlineSpectra+;

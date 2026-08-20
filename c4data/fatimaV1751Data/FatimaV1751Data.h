@@ -18,11 +18,12 @@ class FatimaV1751Data : public TObject
                         uint8_t channel_id,
                         uint8_t detector_id,
                         uint32_t channel_time_tag,
+                        uint64_t channel_ts,
                         uint32_t channel_fine_time,
                         double channel_time,
                         uint16_t channel_charge_short,
                         uint16_t channel_charge_long,
-                        uint16_t channel_energy,
+                        double channel_energy,
                         uint16_t wr_subsystem_id,
                         uint64_t wr_t
                         );
@@ -36,11 +37,12 @@ class FatimaV1751Data : public TObject
         inline const uint8_t Get_channel_id() const { return fchannel_id; }
         inline const uint8_t Get_detector_id() const { return fdetector_id; }
         inline const uint32_t Get_channel_time_tag() const { return fchannel_time_tag; }
+        inline const uint64_t Get_channel_ts() const { return fchannel_ts; }
         inline const uint32_t Get_channel_fine_time() const { return fchannel_fine_time; }
         inline const double Get_channel_time() const { return fchannel_time; }
         inline const uint16_t Get_channel_charge_short() const { return fchannel_charge_short; }
         inline const uint16_t Get_channel_charge_long() const { return fchannel_charge_long; }
-        inline const uint16_t Get_channel_energy() const { return fchannel_energy; }
+        inline const double Get_channel_energy() const { return fchannel_energy; }
 
         inline const uint16_t Get_wr_subsystem_id() const { return fwr_subsystem_id; }
         inline const uint64_t Get_wr_t() const { return fwr_t; }
@@ -51,6 +53,7 @@ class FatimaV1751Data : public TObject
         void Set_channel_id(uint8_t v) { fchannel_id = v; }
         void Set_detector_id(uint8_t v) { fdetector_id = v; }
         void Set_channel_time_tag(uint32_t v) { fchannel_time_tag = v; }
+        void Set_channel_ts(uint64_t v) { fchannel_ts = v; }
         void Set_channel_fine_time(uint32_t v) { fchannel_fine_time = v; }
         void Set_channel_time(double v) { fchannel_time = v; }
         void Set_channel_charge_short(uint16_t v) { fchannel_charge_short = v; }
@@ -67,6 +70,7 @@ class FatimaV1751Data : public TObject
         uint8_t fchannel_id;
         uint8_t fdetector_id;
         uint32_t fchannel_time_tag;
+        uint64_t fchannel_ts;
         uint32_t fchannel_fine_time;
         double fchannel_time;
         uint16_t fchannel_charge_short;
