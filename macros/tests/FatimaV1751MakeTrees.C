@@ -1,34 +1,49 @@
+// Switch all tasks related to {subsystem type} on (1)/off (0)
+#define FATIMA_TRACE10BIT_ON 0
+#define FATIMA_TRACE8BIT_ON 1
+
 #include <TROOT.h>
 
 // Struct should containt all subsystem h101 structures
 typedef struct EXT_STR_h101_t
 {   
     EXT_STR_h101_unpack_t eventheaders;
-    EXT_STR_h101_v1751_onion_t fatima;
+    EXT_STR_h101_v1751_Trace10Bit_onion_t fatima_trace10bit;
+    EXT_STR_h101_v1751_Trace8Bit_onion_t fatima_trace8bit;
 } EXT_STR_h101;
 
 
 int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
 {   
-    const Int_t nev = -1; // Process all events
-    // const Int_t nev = 1000000; // Process all events
+    if (FATIMA_TRACE10BIT_ON && FATIMA_TRACE8BIT_ON){
+        printf("ERROR: Cannot have 10BIT Traces and 8BIT traces enabled simultaneously.");
+        std::exit(1);
+    }    
+
+    if (!(FATIMA_TRACE10BIT_ON || FATIMA_TRACE8BIT_ON)){
+        printf("ERROR: Must enable either 10BIT Traces or 8BIT traces.");
+        std::exit(1);
+    }    
+
+    // const Int_t nev = -1; // Process all events
+    const Int_t nev = 10000; // Process all events
     const Int_t fRunId = 1; 
     const Int_t fExpId = 1;
 
-    // TString ucesb_path = "/lustre/gamma/gbrunic/FatimaTest/c4Root/unpack/exps/onlyFatimaVme/onlyFatimaVme  --input-buffer=200Mi --event-sizes --allow-errors --data";
-    TString ucesb_path = "/lustre/gamma/gbrunic/FatimaTest/c4Root/unpack/exps/onlyFatimaVme/onlyFatimaVme --input-buffer=200Mi --allow-errors --debug";
+    TString ucesb_path;
+
+    if (FATIMA_TRACE10BIT_ON){
+        TString ucesb_path = "/lustre/gamma/gbrunic/FatimaTest/c4Root/unpack/exps/onlyFatimaTrace10Bit/onlyFatimaTrace10Bit --input-buffer=200Mi --allow-errors --debug";
+    }
+
+    if (FATIMA_TRACE8BIT_ON){
+        TString ucesb_path = "/lustre/gamma/gbrunic/FatimaTest/c4Root/unpack/exps/onlyFatimaTrace8Bit/onlyFatimaTrace8Bit --input-buffer=200Mi --allow-errors --debug";
+    }
 
     // Set level of debug information
     FairLogger::GetLogger()->SetLogScreenLevel("INFO");
     FairLogger::GetLogger()->SetColoredLog(true);
 
-    // Define where to read data from. Online = stream/trans server, Nearline = .lmd file.
-    
-    //TString filename = "/data.local1/lustre/despec/Scanner2024/lyso_0026_0001.lmd"; // timesorter.
-    //TString filename = "/data.local1/lustre/despec/ScannerSummer/QDCPedestalCalibration/lyso_qdc_cal_0002_0001.lmd"; // timesorter.
-    //TString filename = "/data.local1/lustre/despec/ScannerSummer/QDCPedestalCalibration/lyso_standalone_trigger_0001_000*.lmd";
-    //TString filename = "/data.local1/lustre/despec/ScannerSummer/TraceScan2/scan_front_0006_0688.lmd";
-    // TString filename = "stream://r4l-62";
 
     // Macro timing
     TString cRunId = Form("%04d", fRunId);
@@ -40,16 +55,12 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
     oss << std::put_time(&tm, "%Y%m%d_%H%M%S");
     timer.Start();
     
-    // // Create Online run
-    // Int_t refresh = 1; // Refresh rate for online histograms
-    // Int_t port = 5010; // 
 
     FairRunOnline* run = new FairRunOnline();
     EventHeader* EvtHead = new EventHeader();
     run->SetEventHeader(EvtHead);
     run->SetRunId(1);
     run->SetSink(new FairRootFileSink(outputfile));
-    // run->ActivateHttpServer(refresh, port);
 
     // TFolder* histograms = new TFolder("Histograms", "Histograms");
     // FairRootManager::Instance()->Register("Histograms", "Histogram Folder", histograms, false);
@@ -74,44 +85,33 @@ int FatimaV1751MakeTrees(TString inputfile, TString outputfile)
 
     // EventHeader - should always be done
     UnpackReader* unpackheader = new UnpackReader((EXT_STR_h101_unpack*)&ucesb_struct.eventheaders, offsetof(EXT_STR_h101, eventheaders));
-    
     source->AddReader(unpackheader);
     
-    /*
-    AgataTraceReader* unpack_traces = new AgataTraceReader((EXT_STR_h101_agata_onion*)&ucesb_struct.agata, offsetof(EXT_STR_h101, agata));
-    unpack_traces->SetOnline(true);
-    source->AddReader(unpack_traces);
-    */
-    
-    v1751DpppsdReader* unpack_v1751 = new v1751DpppsdReader((EXT_STR_h101_v1751_onion*)&ucesb_struct.fatima, offsetof(EXT_STR_h101, fatima));
-    unpack_v1751->SetOnline(false);
-    unpack_v1751->SetControlOutput(true);
-    unpack_v1751->SetMultiplicityOutput(1); // Change for different multiplicity counters
-    source->AddReader(unpack_v1751);
+    if (FATIMA_TRACE10BIT_ON){
+        v1751DpppsdTrace10BitReader* unpack_v1751 = new v1751DpppsdTrace10BitReader((EXT_STR_h101_v1751_Trace10Bit_onion*)&ucesb_struct.fatima_trace10bit, offsetof(EXT_STR_h101, fatima_trace10bit));
+        // unpack_v1751->SetOnline(false);
+        unpack_v1751->SetOnline(true);
+        unpack_v1751->SetControlOutput(true);
+        unpack_v1751->SetMultiplicityOutput(1); // Change for different multiplicity counters
+        source->AddReader(unpack_v1751);
 
-    v1751DpppsdRaw2Cal* fatima_cal = new v1751DpppsdRaw2Cal();
-    fatima_cal->SetOnline(false);
-    run->AddTask(fatima_cal);
+        v1751DpppsdTrace10BitRaw2Cal* fatima_cal = new v1751DpppsdTrace10BitRaw2Cal();
+        fatima_cal->SetOnline(false);
+        run->AddTask(fatima_cal);
+    } 
 
-    /*
-    LYSORaw2Cal* lyso_cal = new LYSORaw2Cal();
-    lyso_cal->SetOnline(true);
-    run->AddTask(lyso_cal);
-    */
-    
-    
-    /*
-    TraceVisualizer* onlinege = new TraceVisualizer();
-    onlinege->SetTraceLength(200);
-    onlinege->SetPlotFrequency(200);
-    run->AddTask(onlinege);
-    */
-    
-    //LYSOOnline* lonline = new LYSOOnline();
-    //run->AddTask(lonline);
-    // TraceVisualizerv1751 * onlinev1751 = new TraceVisualizerv1751();
-    // onlinev1751->SetPlotFrequency(50);
-    // run->AddTask(onlinev1751);
+    if (FATIMA_TRACE8BIT_ON){
+        v1751DpppsdTrace8BitReader* unpack_v1751 = new v1751DpppsdTrace8BitReader((EXT_STR_h101_v1751_Trace8Bit_onion*)&ucesb_struct.fatima_trace8bit, offsetof(EXT_STR_h101, fatima_trace8bit));
+        // unpack_v1751->SetOnline(false);
+        unpack_v1751->SetOnline(true);
+        unpack_v1751->SetControlOutput(true);
+        unpack_v1751->SetMultiplicityOutput(1); // Change for different multiplicity counters
+        source->AddReader(unpack_v1751);
+
+        v1751DpppsdTrace8BitRaw2Cal* fatima_cal = new v1751DpppsdTrace8BitRaw2Cal();
+        fatima_cal->SetOnline(false);
+        run->AddTask(fatima_cal);
+    } 
     
     
     

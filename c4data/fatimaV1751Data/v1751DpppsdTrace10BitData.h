@@ -3,8 +3,8 @@
 
 #include "TObject.h"
 
-// #define VMEV1751_TRACE_SIZE 3000 // When traces are enabled
-#define VMEV1751_TRACE_SIZE 2 // When traces are disabled
+#define VMEV1751_TRACE_SIZE 300 // When traces are enabled
+// #define VMEV1751_TRACE_SIZE 2 // When traces are disabled
 
 class v1751DpppsdTrace10BitData : public TObject
 {

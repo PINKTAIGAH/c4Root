@@ -182,7 +182,7 @@ Bool_t v1751DpppsdTrace10BitReader::Read()
         // !!!! THIS CAUSES A MEMORY LEAK !!!!! 
         
         // FIX
-        auto* event = new ((*fArray)[fArray->GetEntriesFast()]) v1751DpppsdData(
+        auto* event = new ((*fArray)[fArray->GetEntriesFast()]) v1751DpppsdTrace10BitData(
             nfired_ch, board_id, ich, current_detector_id,
             *vme_v1751_trigger_time[ich], *vme_v1751_extended_time[ich],
             *vme_v1751_fine_time[ich], *vme_v1751_charge_short[ich], *vme_v1751_charge_long[ich],
