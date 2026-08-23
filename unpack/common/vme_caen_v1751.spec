@@ -5,7 +5,7 @@
 // analyse it for fired channels later? 
 // not sure its possible in ucesb .spec
 
-#define TRACE_LENGTH 120
+#define TRACE_LENGTH 1024
 
 
 VME_CAEN_V1751(board)

@@ -24,6 +24,7 @@ EXPS=template \
 	s450 \
 	NovTest \
 	onlyFATIMA \
+	onlyFATIMAVme \
 	s100 \
 	s101 \
 	s115 \

@@ -45,6 +45,11 @@
 #pragma link C++ class FatimaTwinpeaksData+;
 #pragma link C++ class FatimaTwinpeaksCalData+;
 
+#pragma link C++ class v1751DpppsdTrace10BitData+;
+#pragma link C++ class FatimaV1751Trace10BitData+;
+#pragma link C++ class v1751DpppsdTrace8BitData+;
+#pragma link C++ class FatimaV1751Trace8BitData+;
+
 #pragma link C++ class FatimaVmeQDCItem+;
 #pragma link C++ class FatimaVmeTDCItem+;
 #pragma link C++ class FatimaVmeQDCCalItem+;
@@ -111,6 +116,7 @@
 #pragma link C++ class TGermaniumConfiguration+;
 #pragma link C++ class TFatimaTwinpeaksConfiguration+;
 #pragma link C++ class TFatimaVmeConfiguration+;
+#pragma link C++ class FatimaV1751Configuration+;
 #pragma link C++ class TBGOTwinpeaksConfiguration+;
 #pragma link C++ class TbPlastConfiguration+;
 #pragma link C++ class TCorrelationsConfiguration+;

@@ -7,6 +7,7 @@ ${C4ROOT_SOURCE_DIR}/c4data/frsData
 ${C4ROOT_SOURCE_DIR}/c4data/lisaData
 ${C4ROOT_SOURCE_DIR}/c4data/aidaData
 ${C4ROOT_SOURCE_DIR}/c4data/fatimaData
+${C4ROOT_SOURCE_DIR}/c4data/fatimaV1751Data
 ${C4ROOT_SOURCE_DIR}/c4data/bplastData
 ${C4ROOT_SOURCE_DIR}/c4data/bgoData
 ${C4ROOT_SOURCE_DIR}/c4data/germaniumData
@@ -50,6 +51,11 @@ bplastData/TbPlastConfiguration.cxx
 beammonitorData/BeamMonitorData.cxx
 fatimaData/FatimaTwinpeaksData.cxx
 fatimaData/FatimaTwinpeaksCalData.cxx
+fatimaV1751Data/FatimaV1751Configuration.cxx
+fatimaV1751Data/FatimaV1751Trace10BitData.cxx
+fatimaV1751Data/v1751DpppsdTrace10BitData.cxx
+fatimaV1751Data/FatimaV1751Trace8BitData.cxx
+fatimaV1751Data/v1751DpppsdTrace8BitData.cxx
 fatimaData/TFatimaTwinpeaksConfiguration.cxx
 bgoData/BGOTwinpeaksData.cxx
 bgoData/BGOTwinpeaksCalData.cxx

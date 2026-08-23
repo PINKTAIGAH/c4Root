@@ -35,6 +35,10 @@
 #pragma link C++ class BGORaw2Cal+;
 #pragma link C++ class FatimaVmeReader+;
 #pragma link C++ class FatimaVmeRaw2Cal+;
+#pragma link C++ class v1751DpppsdTrace10BitReader+;
+#pragma link C++ class v1751DpppsdTrace10BitRaw2Cal+;
+#pragma link C++ class v1751DpppsdTrace8BitReader+;
+#pragma link C++ class v1751DpppsdTrace8BitRaw2Cal+;
 #pragma link C++ class BB7Reader+;
 #pragma link C++ class BB7FebexReader+;
 #pragma link C++ class BB7Raw2Cal+;
@@ -55,6 +59,8 @@
 #pragma link C++ class EXT_STR_h101_germanium_traces_onion_t;
 #pragma link C++ class EXT_STR_h101_fatima_onion_t;
 #pragma link C++ class EXT_STR_h101_fatimavme_onion_t;
+#pragma link C++ class EXT_STR_h101_v1751_Trace10Bit_onion_t;
+#pragma link C++ class EXT_STR_h101_v1751_Trace8Bit_onion_t;
 #pragma link C++ class EXT_STR_h101_bgo_onion_t;
 #pragma link C++ class EXT_STR_h101_lisa_onion_t;
 #pragma link C++ class EXT_STR_h101_aida_onion_t;
